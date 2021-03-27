@@ -1,5 +1,5 @@
 import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect , useLocation} from 'react-router-dom'
 import routes from '../routes'
 
 import Sidebar from '../components/Sidebar'
@@ -17,7 +17,7 @@ function Layout() {
   useEffect(() => {
     closeSidebar()
   }, [location])
-
+  
   return (
     <div
       className={`flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}

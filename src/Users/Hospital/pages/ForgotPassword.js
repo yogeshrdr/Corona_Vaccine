@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import ImageLight from '../assets/img/login-office.jpg'
-import { Label, Input, Button } from '@windmill/react-ui'
+import { Label, Input } from '@windmill/react-ui'
 
 function ForgotPassword() {
   return (
@@ -28,9 +28,14 @@ function ForgotPassword() {
                 <Input className="mt-1" placeholder="Enter Email" />
               </Label>
 
-              <Button tag={Link} to="/login" block className="mt-4">
-                Recover password
-              </Button>
+              <Link to="/Hospitals/Login"> <div className="mt-4 ">
+               <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                type="button"
+                style={{ transition: "all .15s ease" }}
+               >
+                     Recover Your Password
+               </button>
+             </div></Link>
             </div>
           </main>
         </div>

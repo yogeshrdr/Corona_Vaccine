@@ -13,7 +13,7 @@ function Icon({ icon, ...props }) {
 function SidebarContent() {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
-      <a className="ml-6 text-lg font-bold md:text-gray-200" href="#">
+      <a className="ml-6 text-lg font-bold md:text-gray-200" href="/">
         CO-VMS
       </a>
       <ul className="mt-6">
@@ -26,7 +26,7 @@ function SidebarContent() {
                 exact
                 to={`/Hospitals${route.path}`}
                 className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 md:text-white md:hover:text-gray-200"
-                activeClassName="md:text-yellow-300 "
+                activeClassName="md:text-yellow-300 dark:text-purple-400"
               >
                 <Route path={`/Hospitals${route.path}`} exact={route.exact}>
                   <span

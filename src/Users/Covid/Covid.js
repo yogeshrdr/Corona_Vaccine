@@ -26,16 +26,18 @@ class Covid extends React.Component {
     const { data, country } = this.state;
     return (
       <>
-      <div className="flex justify-center items-center flex-col bg-blue-900">
+   <div className="flex justify-center items-center flex-col bg-blue-900 dark:bg-purple-800 dark:text-white">
         <h1 className="text-3xl xl:text-5xl font-bold text-white mb-10 mt-5 ">COVMS - COVID UPDATES</h1>
-        <CountryPicker className="flex justify-center " handleCountryChange={this.handleCountryChange} />
-        <Cards data={data} country={country} />
+        <CountryPicker className="flex justify-center dark:text-white" handleCountryChange={this.handleCountryChange} />
+        <Cards  data={data} country={country} />
       </div>
+      
 
-      <div className="flex justify-center items-center flex-col bg-gray-100">
-      <h1 className="text-3xl xl:text-5xl font-bold text-black mb-5 mt-5 ">COVMS - News Headlines</h1>
+      <div className="flex justify-center items-center flex-col bg-gray-100 dark:bg-gray-700 ">
+      <h1 className="text-3xl xl:text-5xl font-bold text-black mb-5 mt-5 dark:text-white">COVMS - News Headlines</h1>
       <Select />
       </div>
+      
       </>
     );
   }

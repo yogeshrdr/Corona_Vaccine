@@ -9,17 +9,10 @@ import {
   TableCell,
   TableRow,
   TableFooter,
-  Avatar,
   Badge,
   Pagination,
 } from '@windmill/react-ui'
 
-import {
-  doughnutOptions,
-  lineOptions,
-  doughnutLegends,
-  lineLegends,
-} from '../utils/demo/chartsData'
 
 function Dashboard() {
   const [page, setPage] = useState(1)

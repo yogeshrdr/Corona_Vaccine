@@ -1,6 +1,6 @@
 import React from 'react'
 import PageTitle from '../components/Typography/PageTitle'
-import { Input, Label, Select} from '@windmill/react-ui'
+import { Input, Label } from '@windmill/react-ui'
 
 
 function Forms() {
@@ -22,7 +22,7 @@ function Forms() {
 
         <div className="mt-4 ">
         <button
-      className="bg-blue-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+      className="bg-blue-900 dark:bg-purple-800 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
       type="button"
       style={{ transition: "all .15s ease" }}
     >

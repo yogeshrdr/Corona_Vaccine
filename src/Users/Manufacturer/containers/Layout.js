@@ -1,5 +1,5 @@
 import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect , useLocation} from 'react-router-dom'
 import routes from '../routes'
 
 import Sidebar from '../components/Sidebar'
@@ -18,6 +18,7 @@ function Layout() {
     closeSidebar()
   }, [location])
 
+
   return (
     <div
       className={`flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
@@ -34,12 +35,12 @@ function Layout() {
                   <Route
                     key={i}
                     exact={true}
-                    path={`/manufacturer${route.path}`}
+                    path={`/Manufacturers/manufacturer${route.path}`}
                     render={(props) => <route.component {...props} />}
                   />
                 ) : null
               })}
-              <Redirect exact from="/manufacturer" to="/manufacturer/dashboard" />
+              <Redirect exact from="/Manufacturers/manufacturer" to="/Manufacturers/manufacturer/dashboard" />
               <Route component={Page404} />
             </Switch>
           </Suspense>

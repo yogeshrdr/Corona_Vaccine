@@ -2,9 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import ImageLight from '../assets/img/login-office.jpg'
-import ImageDark from '../assets/img/login-office-dark.jpeg'
-import { GithubIcon, TwitterIcon } from '../icons'
-import { Label, Input, Button } from '@windmill/react-ui'
+import ImageDark from '../assets/img/login-dark.jpg'
+import { Label, Input } from '@windmill/react-ui'
 
 function Login() {
   return (
@@ -38,9 +37,16 @@ function Login() {
                 <Input className="mt-1" type="password" placeholder="***************" />
               </Label>
 
-              <Button className="mt-4" block tag={Link} to="/manufacturer">
-                Log in
-              </Button>
+             
+
+              <Link to="/Manufacturers/manufacturer/dashboard"> <div className="mt-4 ">
+               <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                type="button"
+                style={{ transition: "all .15s ease" }}
+               >
+                     Log in
+               </button>
+             </div></Link>
 
               <hr className="my-8" />
 
@@ -49,19 +55,19 @@ function Login() {
               <p className="mt-4">
                 <Link
                   className="text-sm font-medium text-blue-900 dark:text-purple-400 hover:underline"
-                  to="/forgot-password"
+                  to="/Manufacturers/forgot-password"
                 >
                   Forgot your password?
                 </Link>
               </p>
-              <p className="mt-1">
+              {/* <p className="mt-1">
                 <Link
                   className="text-sm font-medium text-blue-900 dark:text-purple-400 hover:underline"
-                  to="/create-account"
+                  to="/Manufacturers/create-account"
                 >
                   Create account
                 </Link>
-              </p>
+              </p> */}
             </div>
           </main>
         </div>

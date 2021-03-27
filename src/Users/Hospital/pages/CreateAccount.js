@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import ImageLight from '../assets/img/login-office.jpg'
-import ImageDark from '../assets/img/create-account-office-dark.jpeg'
+import ImageDark from '../assets/img/login-dark.jpg'
 import { Input, Label, Button } from '@windmill/react-ui'
 
 function Login() {

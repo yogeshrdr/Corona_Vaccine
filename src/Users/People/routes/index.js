@@ -17,6 +17,8 @@ const Page404 = lazy(() => import('../pages/404'))
  * If you're looking for the links rendered in the SidebarContent, go to
  * `routes/sidebar.js`
  */
+
+
 const routes = [
   {
     path: '/dashboard', // the url
@@ -34,6 +36,7 @@ const routes = [
   {
     path: '/Appointment',
     component: Appointment,
+    registered : false,
   },
 ]
 

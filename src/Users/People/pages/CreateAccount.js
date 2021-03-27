@@ -43,7 +43,7 @@ function Login() {
                 </span>
               </Label>
 
-              <Button tag={Link} to="/login" block className="mt-4">
+              <Button tag={Link} to="/users/login" block className="mt-4">
                 Create account
               </Button>
 

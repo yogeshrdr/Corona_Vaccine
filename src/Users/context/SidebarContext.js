@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react'
 
-// create context
 export const SidebarContext = React.createContext()
 
 export const SidebarProvider = ({ children }) => {

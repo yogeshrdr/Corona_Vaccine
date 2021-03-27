@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import { Input, Label, Select} from '@windmill/react-ui'
 
 
-function Forms() {
+
+class Forms extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { registered: false,
+                  };
+  }
+
+  render(){
   return (
     <>
       <PageTitle >New Vaccine Registration</PageTitle>
@@ -74,7 +82,9 @@ function Forms() {
 
       </div>
     </>
+  
   )
+  }
 }
 
 export default Forms

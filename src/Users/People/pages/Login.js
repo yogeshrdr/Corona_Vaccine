@@ -31,18 +31,16 @@ function Login() {
                 <Input className="mt-1" type="password" placeholder="***************" />
               </Label>
 
-              <Button className="mt-4" block tag={Link} to="/user">
+              <Button className="mt-4" block tag={Link} to="/users/user">
                 Log in
               </Button>
-
               <hr className="my-8" />
 
-              
 
               <p className="mt-4">
                 <Link
                   className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  to="/forgot-password"
+                  to="/users/forgot-password"
                 >
                   Forgot your password?
                 </Link>
@@ -50,7 +48,7 @@ function Login() {
               <p className="mt-1">
                 <Link
                   className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  to="/create-account"
+                  to="/users/create-account"
                 >
                   Create account
                 </Link>

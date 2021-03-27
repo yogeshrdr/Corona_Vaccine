@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import { Input, Label, Select} from '@windmill/react-ui'
 
 
-function Appointment() {
+class Appointment extends Component {
+
+  render()
+  {
   return (
     <>
       <PageTitle >Appointment</PageTitle>
@@ -58,6 +61,7 @@ function Appointment() {
       </div>
     </>
   )
+  }
 }
 
 export default Appointment

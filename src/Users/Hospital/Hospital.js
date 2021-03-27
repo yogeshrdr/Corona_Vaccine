@@ -13,14 +13,14 @@ function App() {
      <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/create-account" component={CreateAccount} />
-          <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/Hospitals/login" component={Login} />
+          <Route path="/Hospitals/create-account" component={CreateAccount} />
+          <Route path="/Hospitals/forgot-password" component={ForgotPassword} />
 
           {/* Place new routes over this */}
-          <Route path="/Hospital" component={Layout} />
+          <Route path="/Hospitals/Hospital" component={Layout} />
           {/* If you have an index page, you can remothis Redirect */}
-          <Redirect exact from="/Hospitals" to="/login" />
+          <Redirect exact from="/Hospitals" to="/Hospitals/login" />
         </Switch>
       </Router>
     </>

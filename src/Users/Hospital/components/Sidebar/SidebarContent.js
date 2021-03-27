@@ -24,11 +24,11 @@ function SidebarContent() {
             <li className="relative px-6 py-3" key={route.name}>
               <NavLink
                 exact
-                to={route.path}
+                to={`/Hospitals${route.path}`}
                 className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 md:text-white md:hover:text-gray-200"
                 activeClassName="md:text-yellow-300 "
               >
-                <Route path={route.path} exact={route.exact}>
+                <Route path={`/Hospitals${route.path}`} exact={route.exact}>
                   <span
                     className="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"

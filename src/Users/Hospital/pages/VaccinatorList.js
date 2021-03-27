@@ -9,7 +9,6 @@ import {
   TableCell,
   TableRow,
   TableFooter,
-  Avatar,
   Badge,
   Pagination,
 } from '@windmill/react-ui'

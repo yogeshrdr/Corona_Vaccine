@@ -1,12 +1,12 @@
 export const doughnutLegends = [
-  { title: 'Shirts', color: 'bg-blue-500' },
-  { title: 'Shoes', color: 'bg-teal-600' },
-  { title: 'Bags', color: 'bg-purple-600' },
+  { title: 'Vaccinator', color: 'bg-blue-500' },
+  { title: 'Avaialble Vaccine', color: 'bg-teal-600' },
+  { title: 'Ordered Vaccine', color: 'bg-purple-600' },
 ]
 
 export const lineLegends = [
-  { title: 'Organic', color: 'bg-teal-600' },
-  { title: 'Paid', color: 'bg-purple-600' },
+  { title: 'Vaccinator', color: 'bg-teal-600' },
+  { title: 'Covid Case', color: 'bg-purple-600' },
 ]
 
 export const barLegends = [
@@ -27,7 +27,7 @@ export const doughnutOptions = {
         label: 'Dataset 1',
       },
     ],
-    labels: ['Shoes', 'Shirts', 'Bags'],
+    labels: ['Vaccinator', 'Available Vaccine', 'Ordered Vaccine'],
   },
   options: {
     responsive: true,
@@ -43,7 +43,7 @@ export const lineOptions = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
       {
-        label: 'Organic',
+        label: 'Vaccinator',
         /**
          * These colors come from Tailwind CSS palette
          * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
@@ -54,7 +54,7 @@ export const lineOptions = {
         fill: false,
       },
       {
-        label: 'Paid',
+        label: 'Covid Case',
         fill: false,
         /**
          * These colors come from Tailwind CSS palette

@@ -11,7 +11,7 @@ const Hero = () => {
       minHeight: "100vh"
     }}>
       <div className="absolute  w-full h-full bg-center bg-cover">
-        <img className ="absolute  w-full h-full bg-center bg-cover" src={bg}/>
+        <img className ="absolute  w-full h-full bg-center bg-cover" src={bg} alt="background"/>
             <span className="w-full h-full  opacity-25 bg-black pb-0"></span>
           </div>
 

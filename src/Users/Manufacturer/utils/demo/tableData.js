@@ -1,4 +1,4 @@
-export default [
+const table = [
   {"id":1,"vaccine_center_name":"La Prairie, Inc.","date_of_order":"10/10/2020","Status":false,"Destination":"51178 Eagan Drive"},
   {"id":2,"vaccine_center_name":"REMEDYREPACK INC.","date_of_order":"6/14/2021","Status":false,"Destination":"1 Bartelt Alley"},
   {"id":3,"vaccine_center_name":"L'Oreal USA Products Inc","date_of_order":"10/14/2020","Status":false,"Destination":"802 Meadow Ridge Parkway"},
@@ -50,3 +50,5 @@ export default [
   {"id":49,"vaccine_center_name":"MSD Consumer Care, Inc.","date_of_order":"6/28/2020","Status":true,"Destination":"28 Everett Trail"},
   {"id":50,"vaccine_center_name":"Blenheim Pharmacal, Inc.","date_of_order":"12/3/2020","Status":false,"Destination":"413 Johnson Avenue"}
 ]
+
+export default table

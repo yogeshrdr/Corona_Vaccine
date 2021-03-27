@@ -19,12 +19,12 @@ class Forms extends Component {
       <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <Label>
           <span>Name</span>
-          <Input className="mt-1" placeholder="Enter Your Name" />
+          <Input className="mt-1" placeholder="Enter Your Name" required/>
         </Label>
 
         <Label className="mt-4">
           <span>Date of Birth</span>
-          <Input className="mt-1" type="date" />
+          <Input className="mt-1" type="date" required/>
         </Label>
 
 
@@ -50,7 +50,7 @@ class Forms extends Component {
 
         <Label className="mt-4">
           <span>Select ID</span>
-          <Select className="mt-1">
+          <Select className="mt-1" required>
             <option>Addhar Card</option>
             <option>Driving license</option>
             <option>Pan Card</option>
@@ -60,11 +60,11 @@ class Forms extends Component {
 
         <Label className="mt-4">
           <span>ID Number</span>
-          <Input className="mt-1" placeholder="Enter ID Number" />
+          <Input className="mt-1" placeholder="Enter ID Number" required/>
         </Label>
 
         <Label className="mt-6" check>
-          <Input type="checkbox" />
+          <Input type="checkbox" required/>
           <span className="ml-2">
             I agree to the <span className="underline">privacy policy</span>
           </span>
@@ -72,8 +72,8 @@ class Forms extends Component {
         
         <div className="mt-4 ">
         <button
-      className="bg-blue-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-      type="button"
+      className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+      type="submit"
       style={{ transition: "all .15s ease" }}
     >
       Register

@@ -15,8 +15,8 @@ function App() {
         <Switch>
         
           <Route path="/users/login" component={Login} />
-          <Route path="/create-account" component={CreateAccount} />
-          <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/users/create-account" component={CreateAccount} />
+          <Route path="/users/forgot-password" component={ForgotPassword} />
 
           {/* Place new routes over this */}
           <Route path="/users/user" component={Layout} />

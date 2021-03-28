@@ -5,7 +5,7 @@ import ChartCard from '../components/Chart/ChartCard'
 import { Doughnut, Line } from 'react-chartjs-2'
 import ChartLegend from '../components/Chart/ChartLegend'
 import PageTitle from '../components/Typography/PageTitle'
-import {  CartIcon, PeopleIcon } from '../icons'
+import { PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import {doughnutOptions,lineOptions,doughnutLegends,lineLegends,} from '../utils/demo/chartsData'
 
@@ -17,7 +17,7 @@ function Dashboard() {
       <PageTitle>Dashboard</PageTitle>
 
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Total Vaccine Stock" value="6389">
+        <InfoCard title="Vaccine Manufactured" value="1000000">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -26,7 +26,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title=" Today Vaccinator " value="1000">
+        <InfoCard title="Vaccine Available" value="20000">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-green-500 dark:text-green-100"
@@ -35,7 +35,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Next week Vaccinator" value="7376">
+        <InfoCard title="Total Vaccine Ordered" value="17376">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
@@ -44,9 +44,9 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Order vaccine" value="ordered">
+        <InfoCard title="Total Hospital Ordered" value="15">
           <RoundIcon
-            icon={CartIcon}
+            icon={PeopleIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"
             bgColorClass="bg-teal-100 dark:bg-teal-500"
             className="mr-4"

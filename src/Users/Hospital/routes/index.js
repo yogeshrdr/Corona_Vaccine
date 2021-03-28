@@ -6,7 +6,7 @@ const Forms = lazy(() => import('../pages/Quicksearch'))
 const stockdetail = lazy(() => import('../pages/StockDetail.js'))
 const Page404 = lazy(() => import('../pages/404'))
 const Dashboard = lazy(() => import('../pages/Dashboard'))
-
+const OrderTrack = lazy(() => import('../pages/Ordertrack'))
 
 /**
  * ⚠ These are internal routes!
@@ -38,6 +38,10 @@ const routes = [
   {
     path: '/dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/ordertrack',
+    component: OrderTrack,
   },
 ]
 

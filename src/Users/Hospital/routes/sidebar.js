@@ -26,6 +26,11 @@
     icon: 'FormsIcon',
     name: 'Order Vaccine',
   },
+  {
+    path: '/Hospital/ordertrack',
+    icon: 'FormsIcon',
+    name: 'Track Order',
+  },
 ]
 
 export default routes

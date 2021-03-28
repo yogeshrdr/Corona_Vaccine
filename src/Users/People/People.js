@@ -7,7 +7,7 @@ const Login = lazy(() => import('./pages/Login'))
 const CreateAccount = lazy(() => import('./pages/CreateAccount'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 
-function App() {
+function People() {
   return (
     <>
       <Router>
@@ -29,4 +29,4 @@ function App() {
   )
 }
 
-export default App
+export default People

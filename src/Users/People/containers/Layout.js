@@ -7,8 +7,11 @@ import Header from '../components/Header'
 import Main from '../containers/Main'
 import ThemedSuspense from '../components/ThemedSuspense'
 import { SidebarContext } from '../../context/SidebarContext'
-
+const Dashboard = lazy(() => import('../pages/Dashboard'))
+const Forms = lazy(() => import('../pages/Forms'))
 const Page404 = lazy(() => import('../pages/404'))
+const Appointment = lazy(() => import('../pages/Appointment'))
+
 
 function Layout() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
@@ -29,8 +32,9 @@ function Layout() {
         <Header />
         <Main>
           <Suspense fallback={<ThemedSuspense />}>
+          
             <Switch>
-              {routes.map((route, i) => {
+             {/* {routes.map((route, i) => {
                 return route.component ? (
                   <Route
                     key={i}
@@ -39,10 +43,14 @@ function Layout() {
                     render={(props) => <route.component {...props} />}
                   />
                 ) : null
-              })}
+              })}  */}
+               <Route exact path='/users/user/dashboard' component={Dashboard}></Route>
+              <Route exact path='/users/user/forms' component={Forms}></Route>
+              {/* <Route exact path='/users/user/Appointment' component={Appointment}></Route> */}
+              <Route exact path='/users/user/404' component={Page404}></Route> 
               <Redirect exact from="/users/user" to="/users/user/dashboard" />
-              <Route component={Page404} />
-            </Switch>
+            </Switch> 
+           
           </Suspense>
         </Main>
       </div>

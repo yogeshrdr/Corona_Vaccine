@@ -5,18 +5,28 @@ import ChartCard from '../components/Chart/ChartCard'
 import { Doughnut, Line } from 'react-chartjs-2'
 import ChartLegend from '../components/Chart/ChartLegend'
 import PageTitle from '../components/Typography/PageTitle'
-import { PeopleIcon } from '../icons'
+import {  CartIcon, PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import {doughnutOptions,lineOptions,doughnutLegends,lineLegends,} from '../utils/demo/chartsData'
+import Header from '../components/Header'
+import Sidebar from '../components/Sidebar'
 
 function Dashboard() {
   
+
   return (
     <>
-      <PageTitle>Dashboard</PageTitle>
-
+     <div
+      className={'flex h-screen bg-gray-200 dark:bg-gray-900 '}
+    >
+      <Sidebar />
+   
+      <div className="flex flex-col flex-1 w-full">
+        <Header />
+        <div className="m-2">
+        <h1 className="m-1 text-2xl font-semibold text-gray-700 dark:text-gray-200">Hospital Name- </h1>
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="People Vaccinated" value="6389">
+        <InfoCard title="Total Vaccine Stock" value="6389">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -25,7 +35,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="People Registered for Vaccine " value="10000">
+        <InfoCard title=" Today Vaccinator " value="1000">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-green-500 dark:text-green-100"
@@ -34,7 +44,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Vaccine Manufactured" value="7376">
+        <InfoCard title="Next week Vaccinator" value="7376">
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
@@ -43,9 +53,9 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Hospitals Availablity" value="5">
+        <InfoCard title="Order vaccine" value="ordered">
           <RoundIcon
-            icon={PeopleIcon}
+            icon={CartIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"
             bgColorClass="bg-teal-100 dark:bg-teal-500"
             className="mr-4"
@@ -55,18 +65,27 @@ function Dashboard() {
 
       <PageTitle>Charts</PageTitle>
       <div className="grid gap-6 mb-8 md:grid-cols-2">
-        <ChartCard title="Vaccination">
+        <ChartCard title="Revenue">
           <Doughnut {...doughnutOptions} />
           <ChartLegend legends={doughnutLegends} />
         </ChartCard>
 
-        <ChartCard title="Vaccination">
+        <ChartCard title="Traffic">
           <Line {...lineOptions} />
           <ChartLegend legends={lineLegends} />
         </ChartCard>
       </div>
-
-     
+      <div className="mt-4 ">
+                <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                type="button"
+                style={{ transition: "all .15s ease" }}
+                >
+                  Block Hospital
+                </button>
+        </div>
+        </div>
+        </div>
+        </div>
     </>
   )
 }

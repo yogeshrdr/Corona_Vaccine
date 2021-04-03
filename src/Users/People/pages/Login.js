@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import ImageLight from '../assets/img/login-office.jpg'
 import ImageDark from '../assets/img/login-dark.jpg'
 import { Label, Input } from '@windmill/react-ui'
@@ -47,8 +46,6 @@ function Login() {
                </button>
              </div></Link>
 
-
-              
               <hr className="my-8" />
 
 

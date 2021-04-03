@@ -12,6 +12,7 @@ import {
   Badge,
   Pagination,
 } from '@windmill/react-ui'
+import { Link } from 'react-router-dom'
 
 
 
@@ -69,7 +70,7 @@ function Dashboard() {
                   <span className="text-sm">{user.date_of_birth}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.Vaccination_date}</span>
+                  <span className="text-sm"><Link to="/users/Appointment">{user.Vaccination_date}</Link></span>
                 </TableCell>
               </TableRow>
             ))}

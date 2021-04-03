@@ -1,30 +1,89 @@
 import React, { Component } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import { Input, Label, Select} from '@windmill/react-ui'
-
-
-
+import axios from 'axios'
+import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
 class Forms extends Component {
   constructor(props) {
     super(props);
-    this.state = { registered: false,
-                  };
+    this.state={
+      Name: '',
+      DOB: this.getDefaultDate(),
+      Gender: '',
+      ID: ''
+    }
   }
+  getDefaultDate=()=>{
+    var d=new Date()
+    // d.setFullYear(d.getFullYear()-45)
+    // d=d.toISOString().substr(0,10);
+    console.log(d)
+    d.setDate(d.getDate()+2)
+    d=d.toISOString().substr(0,10)
+    console.log("HELLO"+d)
+    return d;
+  }
+  handelSubmit=(events)=>{
+    events.preventDefault();
+    const {Name,DOB,Gender,ID}=this.state
+    console.log(Name+" "+DOB+" "+Gender+" "+ID)
+     const token=localStorage.getItem('sepmToken')
+     console.log(token)
+    axios.post('http://localhost:4000/api/reg/register',
+      {
+       Name: Name,
+       DOB: DOB,
+       Gender: Gender,
+       ID: ID},{
+         headers:{
+          'authorization': `Bearer ${token}`
+         }
+        }
+       ).then((res)=> {
+         console.log(res)
+            if(res.data.success) 
+            {
+              this.props.history.push("/users/user/dashboard")
+            }else{
+              if(res.data.message==='User Not Authorized')
+              {
+                   this.props.userAuth();
+              }else{
+                  window.alert(res.data.msg)
+              }
+            }
 
+       }).catch((err)=>console.log(err))
+  }
+ handelChange=(events)=>{
+      const{name,value}= events.target
+      if(name==='DOB')
+      {
+          const data=value.split('-')
+          if(data[0]>2000)
+          {
+            window.alert('Only Patient of Age Above 45 are allowed')
+            return;
+          }  
+      }
+      this.setState({[name]: value}) 
+ }
   render(){
   return (
     <>
+      <form onSubmit={this.handelSubmit}>
       <PageTitle >New Vaccine Registration</PageTitle>
-      
+
       <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <Label>
           <span>Name</span>
-          <Input className="mt-1" placeholder="Enter Your Name" required/>
+          <Input value={this.state.Name} name="Name" className="mt-1" placeholder="Enter Your Name" onChange={this.handelChange} required/>
         </Label>
 
         <Label className="mt-4">
           <span>Date of Birth</span>
-          <Input className="mt-1" type="date" required/>
+          <Input  value={this.state.DOB} name="DOB" className="mt-1" type="date" onChange={this.handelChange} required/>
         </Label>
 
 
@@ -34,21 +93,21 @@ class Forms extends Component {
           <Label>Gender</Label>
           <div className="mt-2">
             <Label radio>
-              <Input type="radio" value="male" name="accountType" />
+              <Input type="radio" value="Male" name="Gender" onChange={this.handelChange}/>
               <span className="ml-2">Male</span>
             </Label>
             <Label className="ml-6" radio>
-              <Input type="radio" value="female" name="accountType" />
+              <Input type="radio" value="Female" name="Gender" onChange={this.handelChange}/>
               <span className="ml-2">Female</span>
             </Label>
             <Label className="ml-6" radio>
-              <Input type="radio" value="female" name="accountType" />
+              <Input type="radio" value="Other" name="Gender" onChange={this.handelChange}/>
               <span className="ml-2">Other</span>
             </Label>
           </div>
         </div>
 
-        <Label className="mt-4">
+        {/* <Label className="mt-4">
           <span>Select ID</span>
           <Select className="mt-1" required>
             <option>Addhar Card</option>
@@ -56,11 +115,11 @@ class Forms extends Component {
             <option>Pan Card</option>
             <option>Other</option>
           </Select>
-        </Label>
+        </Label> */}
 
         <Label className="mt-4">
-          <span>ID Number</span>
-          <Input className="mt-1" placeholder="Enter ID Number" required/>
+          <span>Aadhar Number</span>
+          <Input className="mt-1" name="ID" value={this.state.ID} placeholder="Enter ID Number" onChange={this.handelChange} required/>
         </Label>
 
         <Label className="mt-6" check>
@@ -81,10 +140,23 @@ class Forms extends Component {
         </div>
 
       </div>
+      </form>
     </>
   
   )
   }
 }
 
-export default Forms
+const mapStateToProps=(State)=>{
+  return{
+      user: State.user
+  }
+}
+
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    userAuth: ()=> dispatch({type: 'ADD_USER_AUTH'})
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Forms))

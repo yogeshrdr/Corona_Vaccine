@@ -1,11 +1,48 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import axios from 'axios'
 import ImageLight from '../assets/img/login-office.jpg'
 import ImageDark from '../assets/img/login-dark.jpg'
 import { Input, Label } from '@windmill/react-ui'
-
-function Login() {
+import {withRouter} from 'react-router-dom'
+class Login extends React.Component{
+  constructor(props)
+  {
+    super(props)
+    this.state={
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
+  }
+  handelChange=(events)=>{
+     const {name,value}=events.target
+     this.setState({[name]: value})
+  }
+  handelSubmit=(events)=>{
+    events.preventDefault();
+    const {email,password,confirmPassword}=this.state;
+    if(password!==confirmPassword)
+    {
+      alert('Passwords does not match')
+    }else{
+      axios.post('http://localhost:4000/api/userAuth/SignUp',{
+        email: email,
+        password: password
+      },{headers:{
+        'Content-Type': 'application/json;charset=utf-8'
+      }}).then((response)=>{
+        console.log(response)
+          if(!response.data.success) alert(response.message)
+          else { 
+           
+            this.props.history.push("/users/Login")
+          }
+      })  
+      .catch((err)=>console.log(err))
+    }
+  }
+  render(){
   return (
     <div className="flex items-center min-h-screen p-6 bg-blue-100 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
@@ -25,21 +62,22 @@ function Login() {
             />
           </div>
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+            <form onSubmit={this.handelSubmit}>
             <div className="w-full">
               <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Create Account
               </h1>
               <Label>
                 <span>Email</span>
-                <Input className="mt-1" type="email" placeholder="Enter Email" />
+                <Input className="mt-1" value={this.state.email} type="email" name="email" placeholder="Enter Email" onChange={this.handelChange} />
               </Label>
               <Label className="mt-4">
                 <span>Password</span>
-                <Input className="mt-1" placeholder="***************" type="password" />
+                <Input className="mt-1" value={this.state.password} placeholder="***************" type="password" name="password" onChange={this.handelChange} />
               </Label>
               <Label className="mt-4">
                 <span>Confirm password</span>
-                <Input className="mt-1" placeholder="***************" type="password" />
+                <Input className="mt-1" value={this.state.confirmPassword} placeholder="***************" type="password" name="confirmPassword" onChange={this.handelChange} />
               </Label>
 
               <Label className="mt-6" check>
@@ -49,16 +87,16 @@ function Login() {
                 </span>
               </Label>
               
-              <Link to="/users/login">
+              
               <div className="mt-4 ">
               <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                type="button"
+                type="submit"
                 style={{ transition: "all .15s ease" }}
               >
               Register
               </button>
             </div>
-            </Link>
+            
 
 
               <hr className="my-8" />
@@ -72,11 +110,12 @@ function Login() {
                 </Link>
               </p>
             </div>
+            </form>
           </main>
         </div>
       </div>
     </div>
-  )
+  )}
 }
 
-export default Login
+export default withRouter(Login)

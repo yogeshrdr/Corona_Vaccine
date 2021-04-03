@@ -4,8 +4,6 @@ import bg from '../images/background.jpg';
 
 const Hero = () => {
   return (
-
-
     <div className="relative  flex content-center items-center justify-center bg-blue-800"
     style={{
       minHeight: "100vh"

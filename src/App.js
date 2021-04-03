@@ -6,8 +6,38 @@ import Manufacturer from './Users/Manufacturer/Manufacturer'
 import Government from './Users/Goverment/Government'
 import Covid from './Users/Covid/Covid';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
+import {connect} from 'react-redux'
+import axios from 'axios';
+import Appointment from './Users/People/pages/Appointment'
 
-function App() {
+class App extends React.Component{
+  constructor(props)
+  {
+    super(props);
+  }
+  componentDidMount()
+  {
+    const token=localStorage.getItem('sepmToken')
+    console.log(token)
+    if(token)
+    {
+      axios.get('http://localhost:4000/api/userAuth/authCheck',{
+        headers: {
+          'authorization': `Bearer ${token}`
+        }
+      }).then((res)=>
+         {
+           if(res.data.success)
+           {
+              this.props.setUserAuth();
+           }
+         }
+      )
+      .catch((er)=> console.log(er))
+    }
+  }
+  render(){
   return (
     <>
     <Router>
@@ -23,6 +53,16 @@ function App() {
       </Router>
     </>
   );
+  }
 }
-
-export default App;
+const mapDispatchToProps=(dispatch)=>{
+  return{
+     setUserAuth: ()=> dispatch({type: 'ADD_USER_AUTH'})
+  }
+}
+const mapStateToProps=(state)=>{
+  return{
+    user: state.user
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(App)

@@ -15,12 +15,7 @@
     path: '/user/forms',
     icon: 'FormsIcon',
     name: 'New Registration',
-  },
-  {
-    path: '/user/appointment',
-    icon: 'FormsIcon',
-    name: 'Appointment',
-  },
+  }
 ]
 
 export default routes

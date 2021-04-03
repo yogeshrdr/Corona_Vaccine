@@ -6,16 +6,23 @@ import reportWebVitals from './reportWebVitals';
 import { SidebarProvider } from './Users/context/SidebarContext'
 import ThemedSuspense from './Users/People/components/ThemedSuspense'
 import { Windmill } from '@windmill/react-ui'
-
+import {Provider} from 'react-redux'
+import store from './Redux/store'
+import {BrowserRouter} from 'react-router-dom'
 
 ReactDOM.render(
+  <Provider store={store}>
   <SidebarProvider>
+    <BrowserRouter>
   <Suspense fallback={<ThemedSuspense />}>
     <Windmill usePreferences>
       <App />
     </Windmill>
   </Suspense>
-</SidebarProvider>,
+  </BrowserRouter>
+</SidebarProvider>
+
+</Provider>,
 document.getElementById('root')
   
 );

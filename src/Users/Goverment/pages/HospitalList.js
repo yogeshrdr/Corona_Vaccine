@@ -12,6 +12,7 @@ import {
   Badge,
   Pagination,
 } from '@windmill/react-ui'
+import { Link } from 'react-router-dom'
 
 
 
@@ -46,6 +47,7 @@ function Dashboard() {
               <TableCell>Gender</TableCell>
               <TableCell>Date Of Birth</TableCell>
               <TableCell>Vaccination Date</TableCell>
+              <TableCell>Button</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
@@ -70,6 +72,9 @@ function Dashboard() {
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">{user.Vaccination_date}</span>
+                </TableCell>
+                <TableCell>
+                 <Link to='/Goverment/gov/hospitaldashboard'> <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ">show status</button> </Link>
                 </TableCell>
               </TableRow>
             ))}

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
-import { Input, Label, Select } from '@windmill/react-ui'
+import {  Label, Select } from '@windmill/react-ui'
 import data from '../utils/demo/State'
-import { Card, CardBody } from '@windmill/react-ui'
-import Dashbord from '../../Hospital/pages/Dashboard'
 import HospitalList from './HospitalList'
 class Forms extends Component {
   constructor(props) {
@@ -30,12 +28,6 @@ render(){
   if(this.state.district_Id === "Rewari"){
       searchhospital = (
         <div>
-            {/* <PageTitle>Hospital list </PageTitle>
-<Card>
-  <CardBody>
-    <Dashbord />
-  </CardBody>
-</Card> */}
 <HospitalList />
 
     </div>

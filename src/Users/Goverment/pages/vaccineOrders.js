@@ -3,7 +3,7 @@ import PageTitle from '../components/Typography/PageTitle'
 import { Input, Label, Select, Textarea} from '@windmill/react-ui'
 import data from '../utils/demo/State'
 import axios from 'axios'
-class Forms extends Component {
+class vaccineOrder extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -144,4 +144,4 @@ class Forms extends Component {
   }
 }
 
-export default Forms
+export default vaccineOrder

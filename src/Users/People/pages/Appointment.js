@@ -16,7 +16,8 @@ class Appointment extends Component {
       stateData: [],
       districtData: [],
       hospitalData: [],
-      availableDates: []
+      availableDates: [],
+      hospitalLimit: ''
    };
   }
   componentDidMount(){
@@ -52,7 +53,8 @@ class Appointment extends Component {
     {
 
        const data=this.state.hospitalData.filter((e)=> e.hospitalID===this.state.hospitalID)
-       if(data[0])
+      //  if(data[0])
+      console.log(data)
           this.setState({availableDates: data[0].availableDates,selectedDate: ''},()=> console.log(this.state.availableDates))
         
     }
@@ -61,7 +63,22 @@ class Appointment extends Component {
   myChangeHandler = (event) => {
     console.log("HIII")
     const {name,value}=event.target
-    this.setState({[name]: value});
+    if(value=="")
+    {
+      window.alert("You Can't Select this value")
+    }
+    else if(name==="hospitalID")
+    {
+      console.log("here")
+        const Value=JSON.parse(value) 
+        
+        this.setState({hospitalID: Value.hospitalID})
+        this.setState({hospitalLimit: Value.hospitalLimit})
+      
+    }else{
+      this.setState({[name]: value});
+    }
+    
   }
 
   handelSubmit=(event)=>{
@@ -128,6 +145,7 @@ class Appointment extends Component {
         <Label >
         <span>Enter State</span>
           <Select className="mt-1" name="stateID" onChange={this.myChangeHandler} required>
+          <option value="">Select State</option>
           {this.state.stateData.map((states, i) => (
                   <option key={i} name="stateID" value={states.stateID}>{states.name}</option> 
             ))}    
@@ -136,12 +154,14 @@ class Appointment extends Component {
 
               {
                 
-                this.state.stateData!=='' ? 
+                this.state.stateID!=='' ? 
                 <Label>
                   <span>Enter District</span>
                   <Select className="mt-1" name="districtID" onChange={this.myChangeHandler} required>
+                    <option value="">Select District</option>
                     {this.state.districtData.map((district, i) => (
                     <option key={i}  value={district.districtID}>{district.name}</option>
+                    
                     ))}   
                     </Select> 
                 </Label>
@@ -169,8 +189,13 @@ class Appointment extends Component {
         <Label>
           <span>Vaccinator Center</span>
           <Select name="hospitalID" className="mt-1" onChange={this.myChangeHandler}>
+          { this.state.hospitalData.length ? <option value="">Select Vaccination Centre</option> : <option value="">No Centre Available</option>}
           {this.state.hospitalData.map((hospital, i) => (
-                    <option key={i} name="hospitalID" value={hospital.hospitalID}>{hospital.name}</option>
+                  
+                 hospital.vaccinationStatus ?
+                 <option key={i} name="hospitalID" value={JSON.stringify({hospitalID: hospital.hospitalID, hospitalLimit: hospital.dailyLimit})}>{hospital.name}</option>
+                 : null
+                  
           ))}   
           </Select>
         </Label> :
@@ -181,8 +206,9 @@ class Appointment extends Component {
         <Label>
           <span>Available Dates</span>
           <Select name="selectedDate" className="mt-1" onChange={this.myChangeHandler}>
+          { this.state.hospitalData.length ? <option value="">Available Slots</option> : <option value="">No Slot Available</option>}
           {this.state.availableDates.map((dates, i) => (
-                    <option key={i} name="selectedDate" value={dates.Date}>{dates.Date}</option>
+               dates.total==this.state.hospitalLimit? null : <option key={i} name="selectedDate" value={dates.Date}>{dates.Date}</option>
           ))}   
           </Select>
         </Label> :

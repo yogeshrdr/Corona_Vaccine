@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-
+const vaccineOrder=lazy(()=> import('../pages/vaccineOrders'))
 const Hospitallist = lazy(() => import('../pages/HospitalList'))
 const Hospitalsearch = lazy(() => import('../pages/Hospitalsearch'))
 const Hospitaladd = lazy(() => import('../pages/HospitalAdd'))
@@ -57,6 +57,10 @@ const routes = [
     path: '/dashboard',
     component: Dashboard,
   },
+  {
+    path: '/orders',
+    component: vaccineOrder,
+  }
 ]
 
 export default routes

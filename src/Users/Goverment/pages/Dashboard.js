@@ -1,5 +1,5 @@
 import React from 'react'
-
+import axios from 'axios'
 import InfoCard from '../components/Cards/InfoCard'
 import ChartCard from '../components/Chart/ChartCard'
 import { Doughnut, Line } from 'react-chartjs-2'
@@ -9,14 +9,33 @@ import { PeopleIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import {doughnutOptions,lineOptions,doughnutLegends,lineLegends,} from '../utils/demo/chartsData'
 
-function Dashboard() {
-  
+class Dashboard extends React.Component{
+  constructor(){
+     super()
+     this.state={
+       data: {}
+     }
+  }
+  componentDidMount(){
+    axios.get('http://localhost:4000/api/admin/getAdminData')
+    .then((res)=>{
+      console.log(res)
+      if(res.data.status){
+
+        this.setState({data: res.data.data})
+      }else{
+        window.alert(res.data.message)
+      }
+    })
+    .catch((error)=>console.log(error))
+  }
+  render(){
   return (
     <>
       <PageTitle>Dashboard</PageTitle>
 
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="People Vaccinated" value="6389">
+        <InfoCard title="People Vaccinated" value={this.state.data.totalVaccinated}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -25,7 +44,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="People Registered for Vaccine " value="10000">
+        <InfoCard title="People Registered for Vaccine " value={this.state.data.totalRegistered}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-green-500 dark:text-green-100"
@@ -43,7 +62,7 @@ function Dashboard() {
           />
         </InfoCard>
 
-        <InfoCard title="Hospitals Availablity" value="5">
+        <InfoCard title="Hospitals Availablity" value={this.state.data.hospitals}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-teal-500 dark:text-teal-100"
@@ -67,7 +86,7 @@ function Dashboard() {
       </div>
     </>
   )
-}
+}}
 
 export default Dashboard
 

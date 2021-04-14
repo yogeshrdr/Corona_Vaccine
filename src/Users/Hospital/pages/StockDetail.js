@@ -2,15 +2,72 @@ import React, { Component } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import { Card, CardBody } from '@windmill/react-ui'
 import { Input, Label, Select} from '@windmill/react-ui'
+import axios from 'axios';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { vaccine_num: 5000,
-                    vaccine_ava: 3000
+    this.state = { vaccine_num: 360,
+                    vaccine_ava: 0,
+                    dailyLimit: 0,
+                    required: 0
                   };
   }
+  componentDidMount()
+  {
+    const token=localStorage.getItem('hospitalToken')
+     axios.get('http://localhost:4000/api/hospital/getDetails',{
+       headers: {
+        'authorization': `Bearer ${token}`
+       }
+     }).then((res)=> {
+       console.log(res)
+         if(res.data.success) 
+         {
+              const obj=res.data.data
+              this.setState({vaccine_ava: obj.totalVaccineStock,dailyLimit: obj.dailyLimit})
+         }else{
+           if(res.data.message==='User Not Authorized')
+           {
+                this.props.hospitalAuth();
+           }else{
+               window.alert(res.data.msg)
+           }
+         }
 
+    }).catch((err)=>console.log(err))
+
+  }
+  handelChange=(event)=>{
+     this.setState({required: event.target.value})
+  }
+  handelSubmit=(event)=>{
+    event.preventDefault();
+    if(this.state.required<=0)
+    {
+      window.alert('Enter the genuine Value')
+    }else{
+      const token=localStorage.getItem('hospitalToken')
+      axios.post('http://localhost:4000/api/hospital/orderVaccine',{
+        required: this.state.required
+      },{
+        headers: {
+          'authorization': `Bearer ${token}`
+        }
+      }
+      ).then((res)=>{
+         if(res.data.success)
+         {
+           window.alert(res.data.message)
+           this.setState({required : 0})
+         }else{
+             window.alert(res.data.message)
+         }
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+  }
   render(){
 
     let order_required = (<p className="mb-10 font-bold text-black dark:text-gray-300">Vaccine Requirement :: Not Required</p>);
@@ -25,44 +82,31 @@ class Profile extends Component {
     { vaccine_order = (
       <div>
       <PageTitle >vaccine Order</PageTitle>
-      
-      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <Label>
-          <span>Number of vaccine Required</span>
-          <Input className="mt-1" placeholder="Enter Number of vaccine Required" />
-        </Label>
+      <form onSubmit={this.handelSubmit}>
+        <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+          <Label>
+            <span>Number of vaccine Required</span>
+            <Input className="mt-1" type="number" name="required" value={this.state.required} onChange={this.handelChange} placeholder="Enter Number of vaccine Required" required/>
+          </Label>
 
-        <Label className="mt-4">
-          <span>Select Delivery Option</span>
-          <Select className="mt-1">
-            <option>Quick Delivery</option>
-            <option>2 Day dilvery</option>
-            <option>1 Week dilvery</option>
-          </Select>
-        </Label>
+          <Label className="mt-6" check>
+            <Input type="checkbox" />
+            <span className="ml-2">
+              I am authorized <span className="underline">to order</span>
+            </span>
+          </Label>
+          
+          <div className="mt-4 ">
+                <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
+                  type="submit"
+                  style={{ transition: "all .15s ease" }}
+                >
+                      Order Vaccine
+                </button>
+              </div>
 
-        <Label className="mt-4">
-          <span>Enter Password to confirm order</span>
-          <Input className="mt-1" placeholder="Password" type="password" />
-        </Label>
-
-        <Label className="mt-6" check>
-          <Input type="checkbox" />
-          <span className="ml-2">
-            I agree to the <span className="underline">privacy policy</span>
-          </span>
-        </Label>
-        
-        <div className="mt-4 ">
-               <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                type="button"
-                style={{ transition: "all .15s ease" }}
-               >
-                    Order Vaccine
-               </button>
-             </div>
-
-      </div>
+        </div>
+      </form>
     </div>
     )
 

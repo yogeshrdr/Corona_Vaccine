@@ -50,6 +50,9 @@ function Header() {
               className="rounded-full focus:shadow-outline-purple focus:outline-none"
               aria-label="Account"
               aria-haspopup="true"
+              onClick={()=>{
+                localStorage.removeItem('sepmToken')
+              }}
             >
              Log out
             </button>

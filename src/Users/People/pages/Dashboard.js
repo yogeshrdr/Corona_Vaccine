@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import response from '../utils/demo/tableData'
 import {Link} from 'react-router-dom'
@@ -66,6 +66,30 @@ class Dashboard extends React.Component{
         this.setState({response: this.props.userData})
       }
     }
+    handelDownload=(event)=>{
+        console.log(event.target.value)
+        const token=localStorage.getItem('sepmToken')
+        axios.post('http://localhost:4000/api/userAuth/getVaccineCertificate',{
+          userID: event.target.value
+          },{
+              headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+            },
+              responseType: 'blob'
+          }   
+        ).then(response => {
+          console.log("HIII")
+              const file = new Blob(
+              [response.data], 
+                {type: 'application/pdf'});
+              const fileURL = URL.createObjectURL(file);
+              window.open(fileURL);
+          })
+        .catch(error => {
+              console.log(error);
+          });
+    }
     render(){
       return(
         <>
@@ -102,7 +126,7 @@ class Dashboard extends React.Component{
                     <span className="text-sm">{user.DOB}</span>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm">{user.scheduled ? user.scheduleDate : <Link to={`/users/Appointment/${user.ID}`}>Appointment</Link>}</span>
+                    <span className="text-sm">{user.vaccinated ? <button value={user.ID} onClick={ this.handelDownload} style={{color: 'blue'}}>Download Vaccinated Certificate</button>: (user.scheduled ? <Link to={`/users/AppointmentDetails/${user.ID}`} style={{color: 'blue'}}>Get Appointment Details</Link> : <Link to={`/users/Appointment/${user.ID}`} style={{color: 'blue'}}>Click for Appointment </Link>)}</span>
                   </TableCell>
                 </TableRow>
               ))}
@@ -124,79 +148,6 @@ class Dashboard extends React.Component{
     }
 }
 
-// function Dashboard() {
-//   const [page, setPage] = useState(1)
-//   const [data, setData] = useState([])
-
-//   // pagination setup
-//   const resultsPerPage = 10
-//   const totalResults = response.length
-
-//   // pagination change control
-//   function onPageChange(p) {
-//     setPage(p)
-//   }
-
-//   // on page change, load new sliced data
-//   // here you would make another server request for new data
-//   useEffect(() => {
-//     setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
-//   }, [page])
-
-//   return (
-//     <>
-//       <PageTitle>Vaccine Status</PageTitle>
-//       <TableContainer>
-//         <Table>
-//           <TableHeader>
-//             <tr>
-//               <TableCell>ID</TableCell>
-//               <TableCell>Name</TableCell>
-//               <TableCell>Gender</TableCell>
-//               <TableCell>Date Of Birth</TableCell>
-//               <TableCell>Vaccination Date</TableCell>
-//             </tr>
-//           </TableHeader>
-//           <TableBody>
-//             {data.map((user, i) => (
-//               <TableRow key={i}>
-//                 <TableCell>
-//                   <div className="flex items-center text-sm">
-//                     <div>
-//                       <p className="font-semibold">{user.id}</p>
-//                     </div>
-//                   </div>
-//                 </TableCell>
-
-//                 <TableCell>
-//                   <span className="text-sm">{user.first_name} {user.last_name}</span>
-//                 </TableCell>
-//                 <TableCell>
-//                   <Badge type={user.gender}>{user.gender}</Badge>
-//                 </TableCell>
-//                 <TableCell>
-//                   <span className="text-sm">{user.date_of_birth}</span>
-//                 </TableCell>
-//                 <TableCell>
-//                   <span className="text-sm">{user.Vaccination_date}</span>
-//                 </TableCell>
-//               </TableRow>
-//             ))}
-//           </TableBody>
-//         </Table>
-//         <TableFooter>
-//           <Pagination
-//             totalResults={totalResults}
-//             resultsPerPage={resultsPerPage}
-//             label="Table navigation"
-//             onChange={onPageChange}
-//           />
-//         </TableFooter>
-//       </TableContainer>
-
-//     </>
-//   )
-// }
 
 const mapStateToProps=(state)=>{
   return{

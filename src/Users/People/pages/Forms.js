@@ -15,22 +15,19 @@ class Forms extends Component {
     }
   }
   getDefaultDate=()=>{
-    var d=new Date()
-    // d.setFullYear(d.getFullYear()-45)
-    // d=d.toISOString().substr(0,10);
-    console.log(d)
-    d.setDate(d.getDate()+2)
-    d=d.toISOString().substr(0,10)
-    console.log("HELLO"+d)
+     var d=new Date()
+     d.setFullYear(d.getFullYear()-45)
+     d=d.toISOString().substr(0,10);
     return d;
   }
   handelSubmit=(events)=>{
     events.preventDefault();
     const {Name,DOB,Gender,ID}=this.state
     console.log(Name+" "+DOB+" "+Gender+" "+ID)
-     const token=localStorage.getItem('sepmToken')
+    console.log(DOB)
+    const token=localStorage.getItem('sepmToken')
      console.log(token)
-    axios.post('http://localhost:4000/api/reg/register',
+   axios.post('http://localhost:4000/api/reg/register',
       {
        Name: Name,
        DOB: DOB,
@@ -61,7 +58,7 @@ class Forms extends Component {
       if(name==='DOB')
       {
           const data=value.split('-')
-          if(data[0]>2000)
+          if(data[0]>1976)
           {
             window.alert('Only Patient of Age Above 45 are allowed')
             return;

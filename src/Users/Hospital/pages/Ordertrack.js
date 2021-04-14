@@ -2,40 +2,69 @@ import React, { Component } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import { Card, CardBody } from '@windmill/react-ui'
 import data from '../utils/demo/VaccineDilvery'
+import axios from 'axios'
 
 class Profile extends Component {
- 
-  render(){
+   constructor()
+   {
+      super()
+      this.state={
+          orders: []
+      }
+   }
+   componentDidMount()
+   {
+    const token=localStorage.getItem('hospitalToken')
+    axios.get('http://localhost:4000/api/hospital/getDetails',{
+      headers: {
+       'authorization': `Bearer ${token}`
+      }
+    }).then((res)=> {
+      console.log(res)
+        if(res.data.success) 
+        {
+             const obj=res.data.data
+             if(res.data.data.orders)
+             {
+                  this.setState({orders: obj.orders})
+             }
+            
+        }else{
+          if(res.data.message==='User Not Authorized')
+          {
+               this.props.hospitalAuth();
+          }else{
+              window.alert(res.data.msg)
+          }
+        }
 
+   }).catch((err)=>console.log(err))
+   }
+  render(){
     return (
     <div>
         <PageTitle>Vaccine Track</PageTitle>
-
-            {data.map((diliver, i) => (
+            
+            {this.state.orders.map((diliver, i) => (
                 <div key={i}>
                 <Card className="mb-5">
                     <CardBody>
-                    <p className="mb-4 font-bold text-black dark:text-gray-300 text-2xl">Order ID - {diliver.id}</p>
-                        <p className="mb-4 font-bold text-black dark:text-gray-300">Number of  Vaccine Ordered :- {diliver.Vaccine}</p>
-                        <p className="mb-4 font-bold text-black dark:text-gray-300">Date of Order :- {diliver.OrderTime}</p>
+                   
+                        <p className="mb-4 font-bold text-black dark:text-gray-300">Number of  Vaccine Ordered :- {diliver.orderedVaccine}</p>
+                        <p className="mb-4 font-bold text-black dark:text-gray-300">Date of Order :- {diliver.orderedDate}</p>
                         <div>
-                        {diliver.Diliver_status
-                         ?  <button className="bg-green-300 p-2 text-1xl text-green-600 rounded-full" >Dilivered</button>
-                         : <div> <button className="bg-red-300 p-2 text-1xl text-red-600 rounded-full mb-2" >Dilivery in Progress</button>
-                        <div>
-                        {diliver.Dilvery
-                         ?  <p className="mb-4 font-bold text-black dark:text-gray-300">Order Accepted BY Manufacurer & ready to transport</p>
-                         : <p className="mb-4 font-bold text-black dark:text-gray-300">Order Status in Progress</p>
-                         }
-                         </div>
+                          <p className="mb-4 font-bold text-black dark:text-gray-300">Status  :- {diliver.orderStatus}</p>
                         </div>
-                         }
-                         </div>
                     </CardBody>
                 </Card>
                 </div>
             ))}
-            
+            <div>
+                {
+                    this.state.orders.length==0 ? <p>No orders Made Yet</p> : null
+                }
+
+            </div>
             
 
 

@@ -19,6 +19,7 @@ class App extends React.Component{
   componentDidMount()
   {
     const token=localStorage.getItem('sepmToken')
+    const token2=localStorage.getItem('hospitalToken')
     console.log(token)
     if(token)
     {
@@ -35,6 +36,23 @@ class App extends React.Component{
          }
       )
       .catch((er)=> console.log(er))
+    }
+    if(token2)
+    {
+      axios.get('http://localhost:4000/api/userAuth/authCheck',{
+        headers: {
+          'authorization': `Bearer ${token2}`
+        }
+      }).then((res)=>
+         {
+           if(res.data.success)
+           {
+              this.props.setHospitalAuth();
+           }
+         }
+      )
+      .catch((er)=> console.log(er))
+
     }
   }
   render(){
@@ -57,7 +75,9 @@ class App extends React.Component{
 }
 const mapDispatchToProps=(dispatch)=>{
   return{
-     setUserAuth: ()=> dispatch({type: 'ADD_USER_AUTH'})
+     setUserAuth: ()=> dispatch({type: 'ADD_USER_AUTH'}),
+     setHospitalAuth: ()=> dispatch({type: 'ADD_HOSPITAL_AUTH'})
+
   }
 }
 const mapStateToProps=(state)=>{

@@ -1,7 +1,10 @@
 
 const INTIAL_STATE={
+    hospitalAuth: false,
     userAuth: false,
-    userData: []
+    userData: [],
+    hospitalData: [],
+    hospitaluserData: []
 }
 
 const userReducer=(state= INTIAL_STATE,action)=>{
@@ -16,6 +19,21 @@ const userReducer=(state= INTIAL_STATE,action)=>{
             return{
                 ...state,
                 userData: action.payload
+            }
+        case 'ADD_HOSPITAL_DATA':
+            return{
+                ...state,
+                hospitalData: action.payload
+            }
+        case 'ADD_HOSPITAL_USER_DATA':
+            return{
+                ...state,
+                hospitaluserData: action.payload
+            }
+        case 'ADD_HOSPITAL_AUTH':
+            return{
+                ...state,
+                hospitalAuth: !state.hospitalAuth
             }
         default: 
            return state

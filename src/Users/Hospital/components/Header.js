@@ -7,12 +7,19 @@ import {
 
 } from '../icons'
 import { WindmillContext } from '@windmill/react-ui'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import { useHistory } from "react-router";
 
-function Header() {
+
+import {useDispatch} from 'react-redux'
+
+
+function Header(props) {
   const { mode, toggleMode } = useContext(WindmillContext)
   const { toggleSidebar } = useContext(SidebarContext)
-
+  const dispatch=useDispatch()
+const history=useHistory()
   return (
     <header className="z-40 py-4 bg-white shadow-bottom bg-blue-900 dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-white font-bold">
@@ -46,15 +53,22 @@ function Header() {
          
           {/* <!-- Profile menu --> */}
           <li className="relative">
-            <Link to="/Hospitals/login">
             <button
               className="rounded-full focus:shadow-outline-purple focus:outline-none"
               aria-label="Account"
               aria-haspopup="true"
+              onClick={()=>{
+                localStorage.removeItem('hospitalToken')
+                dispatch({type: 'ADD_HOSPITAL_AUTH'})
+                history.push({
+                  pathname: '/Hospitals/Hospital/Dashboard'
+                })
+                }
+               }
             >
              Log out
             </button>
-            </Link>
+            
            
            
           </li>
@@ -64,4 +78,4 @@ function Header() {
   )
 }
 
-export default Header
+export default withRouter(Header)

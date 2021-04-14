@@ -18,7 +18,7 @@ export const doughnutOptions = {
   data: {
     datasets: [
       {
-        data: [10000, 5*1000, 7376],
+        data: [100, 5*100, 7376],
         backgroundColor: ['#0694a2', '#1c64f2', '#7e3af2'],
         label: 'Dataset 1',
       },

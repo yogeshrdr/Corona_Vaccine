@@ -18,7 +18,7 @@ const Navbar = () => {
             Department Login
           </Link>
 
-          <Link to="/users" className="p-4">
+          <Link to="/users/user" className="p-4">
             Vaccinator
           </Link>
         </div>
@@ -32,7 +32,7 @@ const Navbar = () => {
           <Link to="/Department" className="p-4">
             Department Login
           </Link>
-          <Link to="/users" className="p-4">
+          <Link to="/users/user" className="p-4">
             Vaccinator
           </Link>
         </div>

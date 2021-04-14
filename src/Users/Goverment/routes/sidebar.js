@@ -8,11 +8,11 @@ const routes = [
     icon: 'PagesIcon',
     name: 'Hospital',
     routes: [
-      {
-        path: '/gov/Hospitallist', 
-        icon: 'HomeIcon',
-        name: 'Hospital List',
-      },
+      // {
+      //   path: '/gov/Hospitallist', 
+      //   icon: 'HomeIcon',
+      //   name: 'Hospital List',
+      // },
       {
         path: '/gov/HospitalAdd',
         icon: 'FormsIcon',
@@ -25,46 +25,17 @@ const routes = [
       },
     ],
   },
+ 
   {
     icon: 'PagesIcon',
-    name: 'Manufacturer',
+    name: 'Vaccination Orders',
     routes: [
       {
-        path: '/gov/Manufacturerlist', 
+        path: '/gov/orders', 
         icon: 'HomeIcon',
-        name: 'Manufacturer List',
-      },
-      {
-        path: '/gov/ManufacturerAdd',
-        icon: 'FormsIcon',
-        name: 'Add Manufacturer',
-      },
-      {
-        path: '/gov/SearchManufacturer',
-        icon: 'FormsIcon',
-        name: 'Search Manufacturer Details',
-      },
-    ],
-  },
-  {
-    icon: 'PagesIcon',
-    name: 'Vaccination Control',
-    routes: [
-      {
-        path: '/gov/HospitalDel', 
-        icon: 'HomeIcon',
-        name: 'Delete Hospital',
-      },
-      {
-        path: '/gov/ManufacturerDel',
-        icon: 'FormsIcon',
-        name: 'Delete Manufacturer',
-      },
-      {
-        path: '/gov/Policychange',
-        icon: 'FormsIcon',
-        name: 'Change Policy',
-      },
+        name: 'Orders',
+      }
+     
     ],
   },
   

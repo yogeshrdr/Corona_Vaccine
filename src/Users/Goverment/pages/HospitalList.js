@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PageTitle from '../components/Typography/PageTitle'
 import response from '../utils/demo/tableData'
+import {connect} from 'react-redux'
+import axios from 'axios'
 import {
   TableBody,
   TableContainer,
@@ -16,82 +18,149 @@ import { Link } from 'react-router-dom'
 
 
 
-function Dashboard() {
-  const [page, setPage] = useState(1)
-  const [data, setData] = useState([])
-
-  // pagination setup
-  const resultsPerPage = 10
-  const totalResults = response.length
-
-  // pagination change control
-  function onPageChange(p) {
-    setPage(p)
+class Dashboard extends React.Component{
+  constructor(props)
+  {
+     super(props)
+    this.state={
+      page: 1,
+      resultsPerPage: 10,
+      totalResults: 0,
+      response: []
+    }
   }
-
-  // on page change, load new sliced data
-  // here you would make another server request for new data
-  useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
-  }, [page])
-
-  return (
-    <>
+  onPageChange=(p)=>{
+      this.setState({page: p})
+  }
+  componentDidMount(){
+    const token=localStorage.getItem('hospitalToken')
+    axios.post('http://localhost:4000/api/admin/getHospital',
+      {
+        stateID: this.props.stateID,
+        districtID: this.props.districtID
+      },{
+      headers: {
+        'authorization': `Bearer ${token}`
+      }}
+    ).then((res)=>{
+      console.log("HIIIIIII")
+       if(res.data.status) {
+         console.log(res)
+         this.setState({response: res.data.data,totalResults: res.data.data.length})
+         this.props.setHospitalData(res.data.data)
+       }
+       else {
+         this.props.userAuth()
+         this.props.history.push('/users/login')
+       }
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+  componentDidUpdate(prevProps,prevState){
+    if(prevState.page!==this.state.page)
+    {
+      const {page,resultsPerPage}= this.state
+      this.setState({response: this.props.hospitalData.slice((page - 1) * resultsPerPage, page * resultsPerPage)})
+    }
+    else if(prevProps.hospitalData.length>this.props.hospitalData.length)
+    {
+      this.setState({totalResults: this.props.hospitalData.length})
+      this.setState({response: this.props.hospitalData})
+    }else if(prevProps.districtID!==this.props.districtID)
+    {
+      const token=localStorage.getItem('sepmToken')
+      axios.post('http://localhost:4000/api/admin/getHospital',
+        {
+          stateID: this.props.stateID,
+          districtID: this.props.districtID
+        },{
+        headers: {
+          'authorization': `Bearer ${token}`
+        }}
+      ).then((res)=>{
+        console.log("HIIIIIII")
+         if(res.data.status) {
+           console.log(res)
+           this.setState({response: res.data.data,totalResults: res.data.data.length})
+           this.props.setHospitalData(res.data.data)
+         }
+         else {
+           this.props.userAuth()
+           this.props.history.push('/users/login')
+         }
+      }).catch((error)=>{
+        console.log(error)
+      })
+      
+    }
+  }
+  render(){
+    return(
+      <>
       <PageTitle>Vaccine Status</PageTitle>
       <TableContainer>
         <Table>
           <TableHeader>
             <tr>
               <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Gender</TableCell>
-              <TableCell>Date Of Birth</TableCell>
-              <TableCell>Vaccination Date</TableCell>
+              <TableCell>Hospital Name</TableCell>
+              <TableCell>Controller Email</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Button</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {data.map((user, i) => (
+            {this.state.response.map((user, i) => (
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{user.id}</p>
+                      <p className="font-semibold">{user.hospitalID}</p>
                     </div>
                   </div>
                 </TableCell>
 
                 <TableCell>
-                  <span className="text-sm">{user.first_name} {user.last_name}</span>
+                  <span className="text-sm">{user.name}</span>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.gender}>{user.gender}</Badge>
+                  <span className="text-sm">{user.email}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.date_of_birth}</span>
+                  <span className="text-sm">{user.vaccinationStatus ? "Active" : "Not Active"}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.Vaccination_date}</span>
-                </TableCell>
-                <TableCell>
-                 <Link to='/Goverment/gov/hospitaldashboard'> <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ">show status</button> </Link>
-                </TableCell>
+                 <Link to={`/Government/hospitaldashboard/${user.hospitalID}`}> <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none  ">show status</button> </Link>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <TableFooter>
           <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
+            totalResults={this.state.totalResults}
+            resultsPerPage={this.state.resultsPerPage}
             label="Table navigation"
-            onChange={onPageChange}
+            onChange={this.onPageChange}
           />
         </TableFooter>
       </TableContainer>
 
     </>
-  )
-}
 
-export default Dashboard
+    )
+  }
+}
+const mapStateToProps=(state)=>{
+  return{
+     hospitalData: state.user.hospitalData
+  }
+}
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    setHospitalData: (data)=> dispatch({type: 'ADD_HOSPITAL_DATA',payload: data}),
+    userAuth: ()=> dispatch({type: 'ADD_USER_AUTH'})
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)

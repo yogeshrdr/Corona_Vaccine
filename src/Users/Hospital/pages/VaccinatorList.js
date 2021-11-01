@@ -92,22 +92,22 @@ class Dashboard extends React.Component{
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{user.userID}</p>
+                      <p className="font-semibold">{user?.userID}</p>
                     </div>
                   </div>
                 </TableCell>
 
                 <TableCell>
-                  <span className="text-sm">{user.Name}</span>
+                  <span className="text-sm">{user?.Name}</span>
                 </TableCell>
                 <TableCell>
-                  <Badge type={user.gender}>{user.Gender}</Badge>
+                  <Badge type={user?.gender}>{user?.Gender}</Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.DOB}</span>
+                  <span className="text-sm">{user?.DOB}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.scheduleDate<this.state.dateToday ? "Vaccinated" : user.scheduleDate}</span>
+                  <span className="text-sm">{user?.scheduleDate<this.state.dateToday ? "Vaccinated" : user?.scheduleDate}</span>
                 </TableCell>
               </TableRow>
             ))}

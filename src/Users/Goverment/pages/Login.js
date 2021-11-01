@@ -1,15 +1,54 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import ImageLight from '../assets/img/login-office.jpg'
 import ImageDark from '../assets/img/login-dark.jpg'
 import { Label, Input } from '@windmill/react-ui'
+import axios from 'axios'
+import {connect} from 'react-redux'
 
-function Login() {
+
+class Login extends React.Component{
+  constructor(props)
+  {
+    super(props)
+    this.state={
+        email: '',
+        password: ''
+    }
+
+  }
+  handelChange=(event)=>{
+    const {name,value}=event.target
+    this.setState({[name]: value})
+  }
+  handelSubmit=(event)=>{
+    
+    event.preventDefault()
+    axios.post('http://localhost:4000/api/admin/adminLogin',{
+       email: this.state.email,
+       password: this.state.password
+     }).then(res=>{
+        if(res.data.success)
+        {
+          
+          localStorage.setItem('adminToken',res.data.token)
+           this.props.setAdminAuth()
+           this.props.history.push('/Government/gov')
+         }else{
+            window.alert(res.data.message)
+         }
+     }).catch((e)=>{
+       console.log(e)
+     })
+  }
+  render(){
   return (
     <div className="flex items-center min-h-screen p-6 bg-blue-900 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
-        <div className="flex flex-col overflow-y-auto md:flex-row">
+       <form onSubmit={this.handelSubmit}>
+       <div className="flex flex-col overflow-y-auto md:flex-row">
+          
           <div className="h-32 md:h-auto md:w-1/2">
             <img
               aria-hidden="true"
@@ -24,42 +63,36 @@ function Login() {
               alt="Office"
             />
           </div>
+          
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+            
             <div className="w-full">
               <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">Govermenent Login</h1>
               <Label>
                 <span>Email</span>
-                <Input className="mt-1" type="email" placeholder="Enter Email" />
+                <Input className="mt-1" type="email" placeholder="Enter Email" name="email" value={this.state.email} onChange={this.handelChange} required/>
               </Label>
 
               <Label className="mt-4">
                 <span>Password</span>
-                <Input className="mt-1" type="password" placeholder="***************" />
+                <Input className="mt-1" type="password" name="password" value={this.state.password} onChange={this.handelChange} placeholder="***************" required/>
               </Label>
-
-                 
-             <Link to="/Government/gov/dashboard"> <div className="mt-4 ">
+               
+            <div>
                <button className="bg-blue-900 dark:bg-purple-600 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full"
-                type="button"
+                type="submit"
                 style={{ transition: "all .15s ease" }}
                >
                      Log in
                </button>
-             </div></Link>
+             </div>
 
 
               <hr className="my-8" />
 
              
 
-              <p className="mt-4">
-                <Link
-                  className="text-sm font-medium text-blue-900 dark:text-purple-400 hover:underline"
-                  to="/Government/forgot-password"
-                >
-                  Forgot your password?
-                </Link>
-              </p>
+            
               {/* <p className="mt-1">
                 <Link
                   className="text-sm font-medium text-blue-900 dark:text-purple-400 hover:underline"
@@ -69,11 +102,25 @@ function Login() {
                 </Link>
               </p> */}
             </div>
-          </main>
-        </div>
+          
+          </main> 
+          
+        </div> 
+        </form>
       </div>
     </div>
   )
+}}
+
+const mapStateToProps=(state)=>{
+  return{
+    myState: state.user
+  }
+}
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    setAdminAuth: ()=> dispatch({type: 'ADD_ADMIN_AUTH'})
+  }
 }
 
-export default Login
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Login))

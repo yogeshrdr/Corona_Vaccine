@@ -8,11 +8,15 @@ import {
 } from '../icons'
 import { WindmillContext } from '@windmill/react-ui'
 import { Link } from 'react-router-dom'
+import { useHistory } from "react-router";
 
+
+import {useDispatch} from 'react-redux'
 function Header() {
   const { mode, toggleMode } = useContext(WindmillContext)
   const { toggleSidebar } = useContext(SidebarContext)
-
+  const dispatch=useDispatch()
+  const history=useHistory()
   return (
     <header className="z-40 py-4 bg-white shadow-bottom bg-blue-900 dark:bg-gray-800">
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-white font-bold">
@@ -51,6 +55,14 @@ function Header() {
               className="rounded-full focus:shadow-outline-purple focus:outline-none"
               aria-label="Account"
               aria-haspopup="true"
+              onClick={()=>{
+                localStorage.removeItem('adminToken')
+                dispatch({type: 'ADD_ADMIN_AUTH'})
+                history.push({
+                  pathname: '/Government/login'
+                })
+                }
+               }
             >
              Log out
             </button>

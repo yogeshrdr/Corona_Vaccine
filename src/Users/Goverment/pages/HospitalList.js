@@ -33,7 +33,7 @@ class Dashboard extends React.Component{
       this.setState({page: p})
   }
   componentDidMount(){
-    const token=localStorage.getItem('hospitalToken')
+    const token=localStorage.getItem('adminToken')
     axios.post('http://localhost:4000/api/admin/getHospital',
       {
         stateID: this.props.stateID,
@@ -50,8 +50,8 @@ class Dashboard extends React.Component{
          this.props.setHospitalData(res.data.data)
        }
        else {
-         this.props.userAuth()
-         this.props.history.push('/users/login')
+         this.props.adminAuth()
+         this.props.history.push('/Government/login')
        }
     }).catch((error)=>{
       console.log(error)
@@ -69,7 +69,7 @@ class Dashboard extends React.Component{
       this.setState({response: this.props.hospitalData})
     }else if(prevProps.districtID!==this.props.districtID)
     {
-      const token=localStorage.getItem('sepmToken')
+      const token=localStorage.getItem('adminToken')
       axios.post('http://localhost:4000/api/admin/getHospital',
         {
           stateID: this.props.stateID,
@@ -86,8 +86,8 @@ class Dashboard extends React.Component{
            this.props.setHospitalData(res.data.data)
          }
          else {
-           this.props.userAuth()
-           this.props.history.push('/users/login')
+           this.props.adminAuth()
+           this.props.history.push('/Government/login')
          }
       }).catch((error)=>{
         console.log(error)
@@ -160,7 +160,7 @@ const mapStateToProps=(state)=>{
 const mapDispatchToProps=(dispatch)=>{
   return{
     setHospitalData: (data)=> dispatch({type: 'ADD_HOSPITAL_DATA',payload: data}),
-    userAuth: ()=> dispatch({type: 'ADD_USER_AUTH'})
+    adminAuth: ()=> dispatch({type: 'ADD_ADMIN_AUTH'})
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Dashboard)

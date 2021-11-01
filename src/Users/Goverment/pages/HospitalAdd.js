@@ -3,6 +3,8 @@ import PageTitle from '../components/Typography/PageTitle'
 import { Input, Label, Select, Textarea} from '@windmill/react-ui'
 import data from '../utils/demo/State'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 class Forms extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,7 @@ class Forms extends Component {
     {
       window.alert('Select Have not selected all details')
     }else{
-      const token=localStorage.getItem('hospitalToken')
+      const token=localStorage.getItem('adminToken')
      axios.post('http://localhost:4000/api/admin/addHospital',
       obj,{
           headers:{
@@ -72,7 +74,9 @@ class Forms extends Component {
              }else{
                if(res.data.message==='User Not Authorized')
                {
-                    this.props.userAuth();
+                    this.props.adminAuth();
+                    this.props.history.push("/Government/login")
+                    
                }else{
                    window.alert(res.data.msg)
                }
@@ -143,5 +147,14 @@ class Forms extends Component {
   )
   }
 }
-
-export default Forms
+const mapStateToProps=(state)=>{
+  return{
+     userAuth: state.user.userAuth
+  }
+}
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    adminAuth: ()=> dispatch({type: 'ADD_ADMIN_AUTH'})
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Forms))

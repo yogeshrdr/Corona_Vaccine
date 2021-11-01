@@ -46,6 +46,7 @@ class Dashboard extends React.Component {
   }
   
   handelHospitalStatus=()=>{
+    
     axios.post('http://localhost:4000/api/admin/changeStatus',{
       hospitalID: this.state.data.hospitalID,
       vaccinationStatus: this.state.vaccinationStatus

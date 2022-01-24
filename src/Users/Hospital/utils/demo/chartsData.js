@@ -1,3 +1,32 @@
+import axios from 'axios'
+
+var x=33;
+var y=33;
+var z=33;
+const myFunction=async ()=>{
+const token=localStorage.getItem('hospitalToken')
+axios.get('http://localhost:4000/api/hospital/getDetails',{
+       headers: {
+        'authorization': `Bearer ${token}`
+       }
+     }).then((res)=> {
+       console.log("EHAT IS THIS HAPENITINFNS")
+       console.log(res)
+         if(res.data.success) 
+         {
+              const obj=res.data.data
+              x=obj.Vaccinated
+              y=obj.stock
+              z=obj.totalAppointment
+              //this.setState({stock: obj.stock,todayAppointment: obj.todayAppointment,totalAppointment: obj.totalAppointment,Vaccinated: obj.Vaccinated})
+         }
+
+}).catch((err)=>console.log(err))
+}
+
+myFunction()
+console.log(x)
+
 export const doughnutLegends = [
   { title: 'Vaccinator', color: 'bg-blue-500' },
   { title: 'Avaialble Vaccine', color: 'bg-teal-600' },
@@ -14,11 +43,12 @@ export const barLegends = [
   { title: 'Bags', color: 'bg-purple-600' },
 ]
 
+
 export const doughnutOptions = {
   data: {
     datasets: [
       {
-        data: [33, 33, 33],
+        data: [x, y, z],
         /**
          * These colors come from Tailwind CSS palette
          * https://tailwindcss.com/docs/customizing-colors/#default-color-palette

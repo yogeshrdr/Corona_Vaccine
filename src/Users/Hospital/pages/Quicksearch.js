@@ -58,11 +58,11 @@ class Forms extends Component {
   handelRenderofVaccinate(){
    var date= new Date()
    date=date.toISOString().substr(0,10);
-   if(this.state.userData[0].DOB!==date)
-   {
-     return false;
-   }
-   return true;
+    // if(this.state.userData[0].DOB!==date)
+    // {
+    //   return false;
+    // }
+    return true;
   }
 
  render(){

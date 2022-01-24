@@ -48,8 +48,10 @@ class Profile extends Component {
       window.alert('Enter the genuine Value')
     }else{
       const token=localStorage.getItem('hospitalToken')
+      const uniqueID=Date.now()
       axios.post('http://localhost:4000/api/hospital/orderVaccine',{
-        required: this.state.required
+        required: this.state.required,
+        orderID: uniqueID
       },{
         headers: {
           'authorization': `Bearer ${token}`

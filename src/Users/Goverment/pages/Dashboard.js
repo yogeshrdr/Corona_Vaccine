@@ -17,7 +17,12 @@ class Dashboard extends React.Component{
      }
   }
   componentDidMount(){
-    axios.get('http://localhost:4000/api/admin/getAdminData')
+    const token=localStorage.getItem('adminToken')
+    axios.get('http://localhost:4000/api/admin/getAdminData',{
+      headers:{
+        'authorization': `Bearer ${token}`
+      }
+    })
     .then((res)=>{
       console.log(res)
       if(res.data.status){

@@ -17,10 +17,39 @@ class AppointmentDetails extends Component {
       districtData: [],
       hospitalData: [],
       availableDates: [],
-      hospitalLimit: ''
+      hospitalLimit: '',
+      userName: ''
    };
   }
+  componentDidMount(){
+    const userID=this.props.match.params.userID
+    const token=localStorage.getItem('sepmToken')
+    console.log(token)
+  axios.post('http://localhost:4000/api/reg/getAppointData',
+     {
+      userID: userID
+    },{
+        headers:{
+         'authorization': `Bearer ${token}`
+        }
+       }
+      ).then((res)=> {
+        console.log(res)
+           if(res.data.success) 
+           {
+             console.log(res.data.data)
+             this.setState({selectedDate: res.data.data.scheduleDate,userName: res.data.data.Name,hospitalID: res.data.data.name,districtID: res.data.data.districtName,stateID: res.data.data.stateName})
+           }else{
+             if(res.data.message==='User Not Authorized')
+             {
+                  this.props.userAuth();
+             }else{
+                 window.alert(res.data.msg)
+             }
+           }
 
+      }).catch((err)=>console.log(err))
+  }
   render(){
   return (
     <>
@@ -36,16 +65,16 @@ class AppointmentDetails extends Component {
       <PageTitle >Appointment Details</PageTitle>
       <div className="flex flex-col px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 text-black ">
          <div style={{marginBottom: '20px'}}>
-             <span style={{fontWeight: 700}}>HOSPITAL NAME-</span> <span style={{paddingLeft: '30px'}}> Devesh</span>
+             <span style={{fontWeight: 700}}>HOSPITAL NAME-</span> <span style={{paddingLeft: '30px'}}> {this.state.hospitalID}</span>
          </div>
          <div style={{marginBottom: '20px'}}>
-         <span style={{fontWeight: 700}}>DISTRICT NAME-</span> <span style={{paddingLeft: '30px'}}> Devesh</span>
+         <span style={{fontWeight: 700}}>DISTRICT NAME-</span> <span style={{paddingLeft: '30px'}}>{this.state.districtID}</span>
          </div>
          <div style={{marginBottom: '20px'}}>
-         <span style={{fontWeight: 700}}>STATE NAME-</span> <span style={{paddingLeft: '30px'}}> Devesh</span>
+         <span style={{fontWeight: 700}}>STATE NAME-</span> <span style={{paddingLeft: '30px'}}> {this.state.stateID}</span>
          </div>
          <div style={{marginBottom: '20px'}}>
-         <span style={{fontWeight: 700}}>SCHEDULED DATE-</span> <span style={{paddingLeft: '30px'}}> Devesh</span>
+         <span style={{fontWeight: 700}}>SCHEDULED DATE-</span> <span style={{paddingLeft: '30px'}}> {this.state.selectedDate}</span>
          </div>
       </div>
       </div>

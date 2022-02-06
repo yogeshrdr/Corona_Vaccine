@@ -37,15 +37,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-        <li>
-      <a href="#website-preview">APP PREVIEW</a>
-      <ul>
-        <li><a href="#login">Login</a></li>
-        <li><a href="#add">USER COVMS</a></li>
-        <li><a href="#dis">HSOPITAL COVMS</a></li>
-        <li><a href="#del"></a></li>
-      </ul>
-    </li>
     <li><a href="#contributors">Contributors</a></li>
   </ol>
 </details>
